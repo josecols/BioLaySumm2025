@@ -132,7 +132,7 @@ def cal_radgraph(preds, refs):
 
 def read_file_lines(path):
     with open(path, "r") as f:
-        lines = json.load(f)[:1]
+        lines = json.load(f)
 
     return lines
 
