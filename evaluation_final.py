@@ -6,7 +6,6 @@ sys.path.append("./AlignScore/src")
 sys.path.append("./summac")
 
 import torch
-import nltk
 import textstat
 import numpy as np
 from rouge_score import rouge_scorer
@@ -167,7 +166,7 @@ def evaluate_all(pred_path, gold_path, task_name):
         score_dict["f1chexbert"] = cal_f1bert(preds, refs)
         score_dict["radgraph"] = cal_radgraph(preds, refs)
 
-    print(score_dict)
+    print(json.dumps(score_dict))
 
     return score_dict
 
