@@ -16,7 +16,7 @@ from lens import download_model, LENS
 from summac.model_summac import SummaCConv
 import argparse
 from f1chexbert import F1CheXbert
-from radgraph import RadGraph, F1RadGraph
+from radgraph import F1RadGraph
 from huggingface_hub import hf_hub_download
 from sentence_transformers import SentenceTransformer
 import evaluate
