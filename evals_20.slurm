@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=eval_len20
-#SBATCH --output=data/processed/results/length_20_eval_%j.out
-#SBATCH --error=data/processed/results/length_20_eval_%j.err
+#SBATCH --job-name=biolaysum_eval
+#SBATCH --output=biolaysum_eval_%j.out
+#SBATCH --error=biolaysum_eval_%j.err
 
 #SBATCH --account=stf
 #SBATCH --partition=gpu-l40
@@ -16,6 +16,7 @@
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=jcols@uw.edu
 
+eval "$(conda shell.bash hook)"
 conda activate biolaysum
 
 bash evals.sh 20

@@ -21,12 +21,25 @@ from sentence_transformers import SentenceTransformer
 import evaluate
 
 
+class NumpyTypeEncoder(json.JSONEncoder):
+    # https://gist.github.com/jonathanlurie/1b8d12f938b400e54c1ed8de21269b65
+
+    def default(self, obj):
+        if isinstance(obj, np.generic):
+            return obj.item()
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+
+        return json.JSONEncoder.default(self, obj)
+
+
 def calc_rouge(preds, refs):
     # Get ROUGE F1 scores
     scorer = rouge_scorer.RougeScorer(
         ["rouge1", "rouge2", "rougeLsum"], use_stemmer=True, split_summaries=True
     )
     scores = [scorer.score(p, refs[i]) for i, p in enumerate(preds)]
+
     return (
         np.mean([s["rouge1"].fmeasure for s in scores])
         + np.mean([s["rouge2"].fmeasure for s in scores])
@@ -60,6 +73,7 @@ def calc_readability(preds):
         fkgl_scores.append(textstat.flesch_kincaid_grade(pred))
         cli_scores.append(textstat.coleman_liau_index(pred))
         dcrs_scores.append(textstat.dale_chall_readability_score(pred))
+
     return np.mean(fkgl_scores), np.mean(cli_scores), np.mean(dcrs_scores)
 
 
@@ -84,6 +98,7 @@ def calc_alignscore(preds, docs):
         ckpt_path=model_path,
         evaluation_mode="nli_sp",
     )
+
     return np.mean(alignscorer.score(contexts=docs, claims=preds))
 
 
@@ -97,24 +112,28 @@ def cal_summac(preds, docs):
         start_file="default",
         agg="mean",
     )
+
     return np.mean(model_conv.score(docs, preds)["scores"])
 
 
 def cal_f1bert(preds, refs):
     f1chexbert = F1CheXbert()
     f1chexbert_score, _, _, _ = f1chexbert(hyps=preds, refs=refs)
+
     return f1chexbert_score
 
 
 def cal_radgraph(preds, refs):
     f1radgraph = F1RadGraph(reward_level="all")
     f1radgraph_score, _, _, _ = f1radgraph(hyps=preds, refs=refs)
+
     return f1radgraph_score[-1]
 
 
 def read_file_lines(path):
     with open(path, "r") as f:
-        lines = json.load(f)
+        lines = json.load(f)[:1]
+
     return lines
 
 
@@ -166,7 +185,7 @@ def evaluate_all(pred_path, gold_path, task_name):
         score_dict["f1chexbert"] = cal_f1bert(preds, refs)
         score_dict["radgraph"] = cal_radgraph(preds, refs)
 
-    print(json.dumps(score_dict))
+    print(json.dumps(score_dict, cls=NumpyTypeEncoder))
 
     return score_dict
 
