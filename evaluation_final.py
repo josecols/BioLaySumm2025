@@ -21,8 +21,6 @@ from huggingface_hub import hf_hub_download
 from sentence_transformers import SentenceTransformer
 import evaluate
 
-nltk.download("punkt")
-
 
 def calc_rouge(preds, refs):
     # Get ROUGE F1 scores
