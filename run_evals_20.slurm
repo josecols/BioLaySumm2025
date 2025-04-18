@@ -3,6 +3,7 @@
 #SBATCH --output=biolaysum_eval_%j.out
 #SBATCH --error=biolaysum_eval_%j.err
 
+#SBATCH --account=stf
 #SBATCH --partition=ckpt-all
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=2
