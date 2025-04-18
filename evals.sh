@@ -19,7 +19,7 @@ for json in data/processed/length_${LENGTH}/*.json; do
   out="${subdir}_${base}.txt"
 
   echo "Running evaluation on $json → $RESULT_DIR/$out"
-  python evaluation_final.py \
+  time python evaluation_final.py \
     --prediction_file "$json" \
     --groundtruth_file "$json" \
     --task_name "$TASK_NAME" \
