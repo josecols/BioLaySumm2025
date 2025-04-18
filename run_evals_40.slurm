@@ -3,13 +3,11 @@
 #SBATCH --output=biolaysum_eval_%j.out
 #SBATCH --error=biolaysum_eval_%j.err
 
-#SBATCH --account=stf
-#SBATCH --partition=gpu-l40
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=4
+#SBATCH --ntasks-per-node=2
 #SBATCH --gpus-per-node=l40:1
-#SBATCH --mem=32G
-#SBATCH --time=14:00:00
+#SBATCH --mem=16G
+#SBATCH --time=4:00:00
 
 #SBATCH --export=all
 #SBATCH --chdir=/gscratch/scrubbed/jcols/BioLaySumm2025
