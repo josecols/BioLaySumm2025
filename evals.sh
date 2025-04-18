@@ -6,7 +6,7 @@ mkdir -p "$RESULT_DIR"
 
 TASK_NAME="lay_summ"
 
-for json in processed/length_*/*.json; do
+for json in data/processed/length_*/*.json; do
   subdir=$(basename "$(dirname "$json")")
   base=$(basename "$json" .json)
 
