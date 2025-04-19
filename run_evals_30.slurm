@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=biolaysum_eval
-#SBATCH --output=biolaysum_eval_%j.out
-#SBATCH --error=biolaysum_eval_%j.err
+#SBATCH --job-name=sumeval
+#SBATCH --output=sumeval_%j.out
+#SBATCH --error=sumeval_%j.err
 
 #SBATCH --account=stf
 #SBATCH --partition=ckpt-all
@@ -9,7 +9,7 @@
 #SBATCH --ntasks-per-node=2
 #SBATCH --gpus-per-node=l40:1
 #SBATCH --mem=16G
-#SBATCH --time=4:00:00
+#SBATCH --time=8:00:00
 
 #SBATCH --export=all
 #SBATCH --chdir=/gscratch/scrubbed/jcols/BioLaySumm2025
